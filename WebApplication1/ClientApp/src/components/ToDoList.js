@@ -34,17 +34,14 @@ export class ToDoList extends Component {
         console.log(this.state);
     }
 
-    static renderToDoListTable(ToDoList) {
+    renderToDoListTable(ToDoList) {
         return (
             <ul className="list-group m3">
-                {ToDoList.map(todo =>
-                    <React.Fragment key={todo.id}>
-                        <li className="list-group-item d-flex align-items-center"> {todo.name}
+                {ToDoList.map(todo =>   
+                        <li key={todo.id} className="list-group-item d-flex align-items-center"> {todo.name}
                             {todo.completed
                             ? <button className="btn btn-sm ml-auto btn-outline-success">&#x2713;</button>
                             : <button className="btn btn-sm ml-auto btn-outline-danger">X</button>} </li>
-                          
-                    </React.Fragment>
                 )}</ul>
         );
     }
@@ -53,7 +50,7 @@ export class ToDoList extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : ToDoList.renderToDoListTable(this.state.ToDoLists);
+            : this.renderToDoListTable(this.state.ToDoLists);
 
         return (
             <div>

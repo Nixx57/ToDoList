@@ -7,6 +7,7 @@ export class AddTask extends Component {
         super(props);
         this.state = {
             taskName: '',
+            messageStatus: '',
         }
     }
 
@@ -18,11 +19,24 @@ export class AddTask extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.state.taskName)
+            body: JSON.stringify(
+                {
+                    "Name": this.state.taskName,
+                    "Completed": false})
         };
 
-        const response = await fetch('api/ToDoModels', requestOptions)
-        const data = await response.json();
+        fetch('api/ToDoModels', requestOptions)
+            .then(async response => {
+                const data = await response.json();
+                if (!response.ok) {
+                    const error = (data && data.message) || response.status;
+                    return Promise.reject(error);
+                }
+            })
+            .catch(error => {
+                this.setState({ messageStatus: error.toString() });
+            })
+            .then(console.log(requestOptions))
     }
 
     onTaskNameChange(event) {
@@ -40,6 +54,7 @@ export class AddTask extends Component {
                             <input type="text" className="form-control" name="taskName" id="taskName" required onChange={this.onTaskNameChange.bind(this)} />
                         </div>
                         <button type="submit" className="btn btn-primary">Créer</button>
+                        <p>{this.messageStatus}</p>
                     </form>
                 </div>
                 <ToolMenu />

@@ -40,7 +40,7 @@ export class ToDoList extends Component {
                 {ToDoList.map(todo =>
                     <React.Fragment key={todo.id}>
                         <li className="list-group-item d-flex align-items-center"> {todo.name}
-                            {todo.Complete
+                            {todo.completed
                             ? <button className="btn btn-sm ml-auto btn-outline-success">&#x2713;</button>
                             : <button className="btn btn-sm ml-auto btn-outline-danger">X</button>} </li>
                           

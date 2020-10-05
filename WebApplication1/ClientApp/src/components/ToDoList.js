@@ -1,32 +1,13 @@
 ﻿import React, { Component } from 'react';
-import { FaCheckSquare, FaPlusSquare, FaTrash, FaListAlt } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
-import '../css/todo.css';
-import axios from 'axios'
+import ToolMenu from './ToolMenu';
 
-export class ToolMenu extends Component {
-    static displayName = ToolMenu.name;
-
-    render() {
-        return (
-            <footer className="d-flex justify-content-between bg-secondary p-3" id="mainFooter">
-                <div className="btn-group">
-                    <NavLink to="/todolist" className="btn btn-outline-dark bg-light"><FaListAlt /></NavLink>
-                    <NavLink to="/completed" className="btn btn-outline-dark bg-light"><FaCheckSquare /></NavLink>
-                    <NavLink to="/add-task" className="btn btn-outline-dark bg-light"><FaPlusSquare /></NavLink>
-                </div>
-                <button className="btn btn-outline-dark bg-light"><FaTrash /></button>
-            </footer>
-        )
-    }
-}
 
 export class ToDoList extends Component {
     static displayName = ToDoList.name;
 
     constructor(props) {
         super(props);
-        this.state = { ToDoLists: [], loading: true };
+        this.state = { ToDoLists: [], loading: true }
     }
 
     componentDidMount() {
@@ -35,15 +16,31 @@ export class ToDoList extends Component {
     }
 
     renderToDoListTable(ToDoList) {
-        return (
-            <ul className="list-group m3">
-                {ToDoList.map(todo =>   
+        let filteredTasks;
+
+        switch (this.props.filter) {
+            case 'completed':
+                filteredTasks = this.ToDoLists.filter(task => task.completed)
+                break;
+            default:
+                filteredTasks = ToDoList;
+        }
+
+        if (filteredTasks.length != 0) {
+            return (
+                <ul className="list-group m3">
+                    {filteredTasks.map(todo =>
                         <li key={todo.id} className="list-group-item d-flex align-items-center"> {todo.name}
                             {todo.completed
-                            ? <button className="btn btn-sm ml-auto btn-outline-success">&#x2713;</button>
-                            : <button className="btn btn-sm ml-auto btn-outline-danger">X</button>} </li>
-                )}</ul>
-        );
+                                ? <button className="btn btn-sm ml-auto btn-outline-success">&#x2713;</button>
+                                : <button className="btn btn-sm ml-auto btn-outline-danger">X</button>} </li>
+                    )}</ul>
+            );
+        }
+        else {
+            return (
+                <p>Aucune tâche</p>)
+        }
     }
 
 

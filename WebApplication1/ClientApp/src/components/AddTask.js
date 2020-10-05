@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { ToolMenu } from './ToDoList';
-import axios from 'axios';
+import { ToolMenu } from './ToolMenu';
 
 export class AddTask extends Component {
     constructor(props) {

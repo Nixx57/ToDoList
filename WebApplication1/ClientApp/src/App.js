@@ -18,7 +18,7 @@ export default class App extends Component {
                 <Route exact path='/' component={Home} />
                 <Route path='/counter' component={Counter} />
                 <Route path='/fetch-data' component={FetchData} />
-                <Route path='/todolist/:filter?' render={(props) => <ToDoList {...props} />} />
+                <Route path='/todolist/:filter?' render={(props) => <ToDoList {...props} />} tasks={ToDoList.ToDoLists} />
                 <Route path='/add-task' component={AddTask} />
             </Layout>
         );
